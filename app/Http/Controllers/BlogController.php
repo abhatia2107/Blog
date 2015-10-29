@@ -2,6 +2,7 @@
 
 namespace Blog\Http\Controllers;
 
+use Auth;
 use Blog\Http\Requests;
 use Blog\Http\Controllers\Controller;
 
@@ -11,6 +12,17 @@ use Carbon\Carbon;
 
 class BlogController extends Controller
 {
+	/**
+	 * BlogController constructor.
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+		$this->middleware('author', ['only' => ['create', 'store']]);
+		$this->middleware('editor', ['only' => ['edit', 'delete']]);
+		$this->middleware('admin', ['only'=>['enable', 'disable']]);
+	}
+
 
 	/**
 	 * Display a listing of the resource.
@@ -19,7 +31,10 @@ class BlogController extends Controller
 	 */
 	public function index()
 	{
-		$blogs = Blog::latest()->get();
+		if(Auth::user()->level==1)
+			$blogs = Blog::withTrashed()->get();
+		else
+			$blogs = Blog::latest()->get();
 		return view('blog.index', compact('blogs'));
 	}
 
@@ -30,18 +45,59 @@ class BlogController extends Controller
 	 */
 	public function create()
 	{
-		return view('blog.create');
+		$category=config('global.category');
+		$radio=config('global.radio');
+		$checkbox=config('global.checkbox');
+		return view('blog.create', compact('category', 'radio', 'checkbox'));
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
+	 * @param  Request  $request
 	 * @return Response
 	 */
 	public function store(Request $request)
 	{
+		$data=$request->all();
+		$this->validate($request, Blog::$rules); // Uncomment and modify if you need to validate any input.
+		$data['user_id']=Auth::id();
+		if(isset($data['checkbox'])) {
+			foreach ($data['checkbox'] as $value) {
+				$data['b' . $value] = 1;
+			}
+		}
+		$blog=Blog::create($data);
+		if(Auth::user()->level!=1)
+			Blog::destroy($blog->id);
+		return redirect('blog');
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @param  Request  $request
+	 * @return Response
+	 */
+	public function update($id, Request $request)
+	{
 		//$this->validate($request, ['name' => 'required']); // Uncomment and modify if you need to validate any input.
-		Blog::create($request->all());
+		if(Auth::user()->level==1)
+			$blog = Blog::withTrashed()->findOrFail($id);
+		else
+			$blog = Blog::findOrFail($id);
+		$this->validate($request, Blog::$rules); // Uncomment and modify if you need to validate any input.
+		$data=$request->all();
+		$data['user_id']=Auth::id();
+		if(isset($data['checkbox'])) {
+			foreach ($data['checkbox'] as $value) {
+				$data['b' . $value] = 1;
+			}
+		}
+		$blog->update($data);
+		if(Auth::user()->level!=1)
+			Blog::destroy($blog->id);
 		return redirect('blog');
 	}
 
@@ -53,8 +109,14 @@ class BlogController extends Controller
 	 */
 	public function show($id)
 	{
-		$blog = Blog::findOrFail($id);
-		return view('blog.show', compact('blog'));
+		if(Auth::user()->level==1)
+			$blog = Blog::withTrashed()->findOrFail($id);
+		else
+			$blog = Blog::findOrFail($id);
+		$category=config('global.category');
+		$radio=config('global.radio');
+		$checkbox=config('global.checkbox');
+		return view('blog.show', compact('blog', 'category', 'radio', 'checkbox'));
 	}
 
 	/**
@@ -65,22 +127,55 @@ class BlogController extends Controller
 	 */
 	public function edit($id)
 	{
-		$blog = Blog::findOrFail($id);
-		return view('blog.edit', compact('blog'));
+		if(Auth::user()->level==1)
+			$blog = Blog::withTrashed()->findOrFail($id);
+		else
+			$blog = Blog::findOrFail($id);
+		$category=config('global.category');
+		$radio=config('global.radio');
+		$checkbox=config('global.checkbox');
+		return view('blog.edit', compact('blog', 'category', 'radio', 'checkbox'));
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Enable the resource for public listing.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id, Request $request)
+	public function enable($id)
 	{
-		//$this->validate($request, ['name' => 'required']); // Uncomment and modify if you need to validate any input.
-		$blog = Blog::findOrFail($id);
-		$blog->update($request->all());
-		return redirect('blog');
+		$blog=Blog::withTrashed()->find($id);
+		if($blog){
+			$blogDisabled=Blog::onlyTrashed()->find($id);
+			if($blogDisabled){
+				$blogDisabled->restore();
+				return redirect()->back()->with('success',trans('blog.blog_enabled'));
+			}
+			else{
+				return redirect()->back()->with('failure',trans('blog.blog_enable_failed'));
+			}
+		}
+		else
+			return redirect()->back()->with('failure',trans('blog.blog_not_exist'));
+	}
+
+	/**
+	 * Disable the resource from public listing.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function disable($id)
+	{
+		$blog=Blog::find($id);
+		if($blog){
+			$blog->delete();
+			return redirect()->back()->with('success',trans('blog.blog_disabled'));
+		}
+		else{
+			return redirect()->back()->with('failure',trans('blog.blog_disable_failed'));
+		}
 	}
 
 	/**
@@ -91,8 +186,11 @@ class BlogController extends Controller
 	 */
 	public function destroy($id)
 	{
-		Blog::destroy($id);
-		return redirect('blog');
+		$blog=Blog::withTrashed()->find($id);
+		if($blog){
+			$blog->forceDelete();
+			return redirect()->back()->with('success',trans('blog.blog_deleted'));
+		}
 	}
 
 }

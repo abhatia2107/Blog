@@ -18,12 +18,15 @@ class CreateBlogsTable extends Migration
                 $table->string('title');
                 $table->integer('category_id');
                 $table->integer('radio');
-                $table->boolean('monday');
-                $table->boolean('tuesday');
-                $table->boolean('wednesday');
-                $table->boolean('thursday');
-                $table->boolean('friday');
+                $table->boolean('b1')->default(0);
+                $table->boolean('b2')->default(0);
+                $table->boolean('b3')->default(0);
+                $table->boolean('b4')->default(0);
+                $table->boolean('b5')->default(0);
+                $table->boolean('b6')->default(0);
                 $table->text('details');
+                $table->integer('user_id')->foreign('user_id')->references('id')->on('users');
+                $table->softDeletes();
                 $table->timestamps();
             });
             

@@ -2,5 +2,17 @@
 @section('content')
     <div class="content">
         <div class="title">Blog</div>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in dolor turpis. Cras quis convallis mi. Vestibulum ornare velit at velit sodales rhoncus. Nullam nec tellus in nunc euismod sodales. Pellentesque ultrices mauris id aliquet commodo. Maecenas vel ligula at dolor pellentesque fermentum. Integer sit amet elit id felis tincidunt tristique a vel urna. Pellentesque in scelerisque lectus. Phasellus quam metus, faucibus eget augue vel, tristique dictum nisl. Donec congue felis finibus, elementum arcu vitae, accumsan velit. Suspendisse potenti. Donec egestas, ipsum vel hendrerit ornare, ante ipsum suscipit risus, eget varius mi nibh ac diam. Curabitur vulputate ac sem nec semper. Suspendisse mauris orci, semper ut leo malesuada, varius rhoncus metus.</p>
+
+        <p>Curabitur congue nunc urna, nec molestie sem molestie in. Suspendisse potenti. Vestibulum condimentum orci ut pellentesque suscipit. Aliquam viverra egestas risus nec dignissim. Vestibulum posuere tortor odio, vitae pellentesque eros efficitur quis. Quisque hendrerit massa in sagittis egestas. Aliquam id eros eget nibh tempor laoreet.</p>
+
+        <p>Integer fringilla rutrum commodo. Nam interdum neque sit amet tincidunt cursus. Cras imperdiet sollicitudin tellus sit amet aliquam. Nullam consectetur tristique purus. Proin eget dignissim ipsum. Nullam rhoncus, libero eu fringilla porta, est purus iaculis erat, non luctus mauris massa at erat. Praesent at tristique diam, eget vulputate nunc. Fusce lobortis, quam non aliquam porta, ligula metus vulputate nisi, vitae fringilla est elit eget elit. Nam sed varius risus. Nam nisl mi, imperdiet non consequat sed, sollicitudin ac nisi. Cras viverra a nisi eget pretium. Quisque varius velit et ultricies dignissim. Donec pharetra eros quis nibh ullamcorper venenatis. Quisque ornare ut metus id venenatis. Sed bibendum venenatis magna eu commodo. Etiam rutrum scelerisque cursus.</p>
+
+        <p>Quisque ac vulputate sem. Quisque ornare lorem iaculis vulputate ornare. Aliquam quis felis justo. Nullam consectetur vitae eros sed laoreet. Ut urna augue, dictum vel urna quis, sagittis egestas lacus. Donec bibendum fringilla massa, sed ultricies urna faucibus non. Donec in leo vitae tellus iaculis feugiat a non elit. Aliquam erat volutpat. Proin at pulvinar massa. Sed placerat bibendum purus, at aliquet urna efficitur sed. Nunc faucibus nisl sollicitudin, mattis leo non, tincidunt neque. Proin aliquam aliquam tellus sed fringilla. Mauris vel consequat purus.</p>
+
+        <p>Aenean vulputate nisi nisl, sed semper sapien pulvinar a. Morbi eget vehicula dui. Morbi placerat augue ut tortor auctor dapibus. Suspendisse interdum egestas pulvinar. Suspendisse consectetur nec turpis ac posuere. Morbi ac ullamcorper leo. Mauris lacinia pharetra nulla id pharetra. Suspendisse non ligula placerat, rutrum nunc vitae, maximus felis. Integer id auctor tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate tincidunt velit et scelerisque. Nunc eleifend, sapien sit amet sagittis vehicula, lorem arcu malesuada lorem, eget facilisis ligula libero vel ante. In ultricies enim at quam venenatis efficitur. Vestibulum fringilla elit eu nunc posuere, in eleifend dolor molestie. Sed viverra pellentesque urna eu finibus.</p>
+
+
     </div>
 @endsection

@@ -60,14 +60,19 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
+        $users=User::all();
+        if($users->isEmpty())
+            $data['level'] = 1;
+        else
+            $data['level'] = 3;
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'level' => 1,
+            'level' => $data['level'],
             'password' => bcrypt($data['password']),
         ]);
-
         $name = $data['name'];
         $email = $data['email'];
         $subject= trans('register.welcome', ['name', $data['name']]);

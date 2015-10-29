@@ -37,23 +37,4 @@ class PagesController extends Controller
         return view('pages.about');
     }
 
-    /**
-     * To display terms and conditions page of the app
-     * @return \Illuminate\View\View
-     */
-
-    public function terms()
-    {
-        return view('pages.terms');
-    }
-
-    /**
-     * To display terms and conditions page of the app
-     * @return \Illuminate\View\View
-     */
-
-    public function privacy()
-    {
-        return view('pages.privacy');
-    }
 }

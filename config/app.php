@@ -144,17 +144,12 @@ return [
         Blog\Providers\AuthServiceProvider::class,
         Blog\Providers\EventServiceProvider::class,
         Blog\Providers\RouteServiceProvider::class,
+
         /*
           * Crud Generator Service Providers...
         */
         Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-
-        /*
-         * Intervention Image Service Providers
-         */
-
-        Intervention\Image\ImageServiceProvider::class,
 
     ],
 

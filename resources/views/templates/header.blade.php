@@ -14,16 +14,25 @@
 
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    @if (Auth::check())
+                    @if ((Auth::check())&&(Auth::user()->level==1))
+                        <li><a href="{{ url('/user') }}">Users</a></li>
+                    @endif
+
+                    @if ((Auth::check())&&(Auth::user()->level<3))
                         <li><a href="{{ url('/blog/create') }}">Write a blog</a></li>
                     @endif
+
                     <li><a href="{{ url('/about') }}">About Us</a></li>
-                    <li><a href="{{ url('/blog') }}">Blog</a></li>
+
+                    @if(Auth::check())
+                        <li><a href="{{ url('/blog') }}">Blog</a></li>
+                    @endif
+
                     @if (Auth::guest())
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>
                     @else
-                        <li><a href="/users/profile">{{ Auth::user()->name }}</a></li>
+                        <li><a href="{{'/user/'.Auth::id()}}">{{ Auth::user()->name }}</a></li>
                         <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                     @endif
                 </ul>

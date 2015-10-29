@@ -14,8 +14,6 @@
 Route::get('/', 'PagesController@welcome');
 
 Route::get('/about', 'PagesController@about');
-Route::get('/terms', 'PagesController@terms');
-Route::get('/privacy', 'PagesController@privacy');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -34,4 +32,16 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+Route::get('/blog/{blog}/enable', [
+    'as'=> 'blog.enable',
+    'uses'=>'BlogController@enable'
+    ]
+);
+Route::get('/blog/{blog}/disable', [
+    'as'=> 'blog.disable',
+    'uses'=>'BlogController@disable'
+    ]
+);
+
 Route::resource('blog', 'BlogController');
+Route::resource('user', 'UserController');
