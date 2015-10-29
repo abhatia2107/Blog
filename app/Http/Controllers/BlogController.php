@@ -150,14 +150,14 @@ class BlogController extends Controller
 			$blogDisabled=Blog::onlyTrashed()->find($id);
 			if($blogDisabled){
 				$blogDisabled->restore();
-				return redirect()->back()->with('success',trans('blog.blog_enabled'));
+				return redirect()->back()->with('success',trans('blog.enabled'));
 			}
 			else{
-				return redirect()->back()->with('failure',trans('blog.blog_enable_failed'));
+				return redirect()->back()->with('failure',trans('blog.enable_failed'));
 			}
 		}
 		else
-			return redirect()->back()->with('failure',trans('blog.blog_not_exist'));
+			return redirect()->back()->with('failure',trans('blog.not_exist'));
 	}
 
 	/**
@@ -171,10 +171,10 @@ class BlogController extends Controller
 		$blog=Blog::find($id);
 		if($blog){
 			$blog->delete();
-			return redirect()->back()->with('success',trans('blog.blog_disabled'));
+			return redirect()->back()->with('success',trans('blog.disabled'));
 		}
 		else{
-			return redirect()->back()->with('failure',trans('blog.blog_disable_failed'));
+			return redirect()->back()->with('failure',trans('blog.disable_failed'));
 		}
 	}
 
@@ -189,7 +189,7 @@ class BlogController extends Controller
 		$blog=Blog::withTrashed()->find($id);
 		if($blog){
 			$blog->forceDelete();
-			return redirect()->back()->with('success',trans('blog.blog_deleted'));
+			return redirect()->back()->with('success',trans('blog.deleted'));
 		}
 	}
 
